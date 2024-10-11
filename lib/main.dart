@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => CountNotifier(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,26 +51,52 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            ValueListenableBuilder<int>(
-              valueListenable: _counter,
-              builder: (context, value, child) {
-                return Text(
-                  '$value',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                );
-              },
-            ),
+            // const Text(
+            //   'You have pushed the button this many times:',
+            // ),
+            // ValueListenableBuilder<int>(
+            //   valueListenable: _counter,
+            //   builder: (context, value, child) {
+            //     return Text(
+            //       '$value',
+            //       style: Theme.of(context).textTheme.headlineMedium,
+            //     );
+            //   },
+            // ),
+            CountWidget(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        // onPressed: _incrementCounter,
+        onPressed: () {
+          context.read<CountNotifier>().incrementCounter();
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+}
+
+class CountNotifier extends ChangeNotifier {
+  int counter = 0;
+
+  void incrementCounter() {
+    counter++;
+    notifyListeners();
+  }
+}
+
+class CountWidget extends StatelessWidget {
+  const CountWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    int value = context.watch<CountNotifier>().counter;
+    return Text(
+      '$value',
+      style: Theme.of(context).textTheme.headlineMedium,
     );
   }
 }
