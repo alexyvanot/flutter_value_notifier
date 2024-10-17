@@ -21,7 +21,7 @@ Ce projet Flutter est une démonstration de l'utilisation de `ValueNotifier` com
 
 ### CountNotifier
 Cette classe hérite de `ChangeNotifier` et contient la logique d'incrémentation du compteur. Chaque fois que la méthode `incrementCounter` est appelée, le compteur est incrémenté et les widgets qui écoutent sont notifiés pour mettre à jour l'affichage.
-
+```dart
 class CountNotifier extends ChangeNotifier {
   int counter = 0;
 
@@ -30,6 +30,7 @@ class CountNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+```
 
 ### Utilisation de ValueNotifier
 Dans la classe `_MyHomePageState`, `ValueNotifier<int>` est utilisé pour gérer localement l'état du compteur. Un `ValueListenableBuilder` (commenté) permet d'écouter les changements de la valeur et de mettre à jour l'interface utilisateur automatiquement.
